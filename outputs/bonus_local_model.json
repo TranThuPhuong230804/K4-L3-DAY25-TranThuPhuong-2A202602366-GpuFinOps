@@ -1,0 +1,11 @@
+{
+  "model": "offline-word-bigram",
+  "backend": "builtin",
+  "generated_tokens": 50000,
+  "elapsed_seconds": 0.041321,
+  "tokens_per_second": 1210047.26,
+  "cpu_rate_usd_per_hour": 0.1,
+  "cost_usd_per_million_tokens": 2.3e-05,
+  "simulated_small_model_usd_per_million_tokens": 0.3,
+  "generation_checksum": 2837340330
+}

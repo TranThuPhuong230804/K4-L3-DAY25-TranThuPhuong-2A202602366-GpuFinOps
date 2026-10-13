@@ -1,12 +1,39 @@
 {
-  "title": "Lab 25 — GPU Cost & Efficiency",
+  "title": "Lab 25 - GPU Cost & Efficiency",
+  "uid": "lab25-gpu-finops",
   "schemaVersion": 39,
+  "refresh": "10s",
+  "time": {"from": "now-15m", "to": "now"},
   "panels": [
-    {"type": "timeseries", "title": "GPU-Util % (the 'busy' clock)", "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
-     "targets": [{"expr": "gpu_util_pct"}]},
-    {"type": "timeseries", "title": "MFU (real efficiency)", "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
-     "targets": [{"expr": "gpu_mfu"}]},
-    {"type": "bargauge", "title": "Wasted $/hr (paid FLOPs not used)", "gridPos": {"h": 8, "w": 24, "x": 0, "y": 8},
-     "targets": [{"expr": "gpu_wasted_cost_usd_per_hr"}]}
+    {
+      "type": "timeseries",
+      "title": "GPU-Util % (busy clock)",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "targets": [{"expr": "gpu_util_pct", "legendFormat": "{{gpu_id}}"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "MFU (useful compute efficiency)",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "targets": [{"expr": "gpu_mfu", "legendFormat": "{{gpu_id}}"}]
+    },
+    {
+      "type": "bargauge",
+      "title": "Wasted USD/hour",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 8},
+      "targets": [{"expr": "gpu_wasted_cost_usd_per_hr", "legendFormat": "{{gpu_id}}"}]
+    },
+    {
+      "type": "bargauge",
+      "title": "Operational carbon (gCO2e/hour)",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 8},
+      "targets": [{"expr": "gpu_carbon_g_per_hr", "legendFormat": "{{gpu_id}}"}]
+    },
+    {
+      "type": "timeseries",
+      "title": "Average board power (W)",
+      "gridPos": {"h": 8, "w": 24, "x": 0, "y": 16},
+      "targets": [{"expr": "gpu_power_w", "legendFormat": "{{gpu_id}}"}]
+    }
   ]
 }

@@ -6,6 +6,27 @@
 
 ---
 
+## Thông tin bài nộp đã hoàn thiện
+
+**Sinh viên:** Trần Thu Phương
+
+**MSSV:** 2A202602366
+
+Bài nộp này đã triển khai đủ **5/5 phần mở rộng Your Turn** và **3/3 bonus**.
+Số liệu đo được nằm trong `outputs/report.md`, `outputs/extension_results.json` và
+`outputs/bonus_summary.md`.
+
+```bash
+python missions/run_all.py
+python bonus/run_all.py
+python verify.py
+pytest -q
+```
+
+Bộ kiểm thử cuối gồm 15 test gốc và 9 test bổ sung cho extension/bonus (tổng 24 test).
+
+---
+
 ## Bối cảnh
 
 Bạn vừa được tuyển làm **FinOps Engineer** tại *NimbusAI* — một startup LLM đang có hóa đơn GPU mất kiểm soát. Bạn được giao:

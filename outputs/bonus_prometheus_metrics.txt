@@ -1,0 +1,78 @@
+# HELP gpu_util_pct nvidia-smi time-active utilization
+# TYPE gpu_util_pct gauge
+# HELP gpu_mfu Model FLOPs Utilization (real efficiency)
+# TYPE gpu_mfu gauge
+# HELP gpu_hourly_cost_usd on-demand $/GPU-hr
+# TYPE gpu_hourly_cost_usd gauge
+# HELP gpu_wasted_cost_usd_per_hr $/hr paid for FLOPs not used (1-mfu)*cost
+# TYPE gpu_wasted_cost_usd_per_hr gauge
+# HELP gpu_power_w Average GPU board power
+# TYPE gpu_power_w gauge
+# HELP gpu_carbon_g_per_hr Estimated operational carbon at configured grid intensity
+# TYPE gpu_carbon_g_per_hr gauge
+gpu_util_pct{gpu_id="gpu-h100-0",gpu_type="H100"} 94.42
+gpu_mfu{gpu_id="gpu-h100-0",gpu_type="H100"} 0.4170
+gpu_hourly_cost_usd{gpu_id="gpu-h100-0",gpu_type="H100"} 2.50
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-h100-0",gpu_type="H100"} 1.4575
+gpu_power_w{gpu_id="gpu-h100-0",gpu_type="H100"} 680.54
+gpu_carbon_g_per_hr{gpu_id="gpu-h100-0",gpu_type="H100"} 258.6058
+gpu_util_pct{gpu_id="gpu-h100-1",gpu_type="H100"} 95.23
+gpu_mfu{gpu_id="gpu-h100-1",gpu_type="H100"} 0.4084
+gpu_hourly_cost_usd{gpu_id="gpu-h100-1",gpu_type="H100"} 2.50
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-h100-1",gpu_type="H100"} 1.4790
+gpu_power_w{gpu_id="gpu-h100-1",gpu_type="H100"} 683.38
+gpu_carbon_g_per_hr{gpu_id="gpu-h100-1",gpu_type="H100"} 259.6825
+gpu_util_pct{gpu_id="gpu-h100-2",gpu_type="H100"} 94.33
+gpu_mfu{gpu_id="gpu-h100-2",gpu_type="H100"} 0.4011
+gpu_hourly_cost_usd{gpu_id="gpu-h100-2",gpu_type="H100"} 2.50
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-h100-2",gpu_type="H100"} 1.4973
+gpu_power_w{gpu_id="gpu-h100-2",gpu_type="H100"} 680.12
+gpu_carbon_g_per_hr{gpu_id="gpu-h100-2",gpu_type="H100"} 258.4475
+gpu_util_pct{gpu_id="gpu-h100-3",gpu_type="H100"} 93.13
+gpu_mfu{gpu_id="gpu-h100-3",gpu_type="H100"} 0.4273
+gpu_hourly_cost_usd{gpu_id="gpu-h100-3",gpu_type="H100"} 2.50
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-h100-3",gpu_type="H100"} 1.4317
+gpu_power_w{gpu_id="gpu-h100-3",gpu_type="H100"} 675.92
+gpu_carbon_g_per_hr{gpu_id="gpu-h100-3",gpu_type="H100"} 256.8483
+gpu_util_pct{gpu_id="gpu-h100-4",gpu_type="H100"} 98.16
+gpu_mfu{gpu_id="gpu-h100-4",gpu_type="H100"} 0.1943
+gpu_hourly_cost_usd{gpu_id="gpu-h100-4",gpu_type="H100"} 2.50
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-h100-4",gpu_type="H100"} 2.0143
+gpu_power_w{gpu_id="gpu-h100-4",gpu_type="H100"} 693.50
+gpu_carbon_g_per_hr{gpu_id="gpu-h100-4",gpu_type="H100"} 263.5300
+gpu_util_pct{gpu_id="gpu-h100-5",gpu_type="H100"} 61.06
+gpu_mfu{gpu_id="gpu-h100-5",gpu_type="H100"} 0.2612
+gpu_hourly_cost_usd{gpu_id="gpu-h100-5",gpu_type="H100"} 2.50
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-h100-5",gpu_type="H100"} 1.8470
+gpu_power_w{gpu_id="gpu-h100-5",gpu_type="H100"} 478.29
+gpu_carbon_g_per_hr{gpu_id="gpu-h100-5",gpu_type="H100"} 181.7508
+gpu_util_pct{gpu_id="gpu-a100-0",gpu_type="A100"} 31.40
+gpu_mfu{gpu_id="gpu-a100-0",gpu_type="A100"} 0.2592
+gpu_hourly_cost_usd{gpu_id="gpu-a100-0",gpu_type="A100"} 1.79
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-a100-0",gpu_type="A100"} 1.3261
+gpu_power_w{gpu_id="gpu-a100-0",gpu_type="A100"} 262.79
+gpu_carbon_g_per_hr{gpu_id="gpu-a100-0",gpu_type="A100"} 99.8608
+gpu_util_pct{gpu_id="gpu-a100-1",gpu_type="A100"} 27.97
+gpu_mfu{gpu_id="gpu-a100-1",gpu_type="A100"} 0.2356
+gpu_hourly_cost_usd{gpu_id="gpu-a100-1",gpu_type="A100"} 1.79
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-a100-1",gpu_type="A100"} 1.3682
+gpu_power_w{gpu_id="gpu-a100-1",gpu_type="A100"} 256.00
+gpu_carbon_g_per_hr{gpu_id="gpu-a100-1",gpu_type="A100"} 97.2800
+gpu_util_pct{gpu_id="gpu-a10g-0",gpu_type="A10G"} 24.95
+gpu_mfu{gpu_id="gpu-a10g-0",gpu_type="A10G"} 0.2185
+gpu_hourly_cost_usd{gpu_id="gpu-a10g-0",gpu_type="A10G"} 1.00
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-a10g-0",gpu_type="A10G"} 0.7815
+gpu_power_w{gpu_id="gpu-a10g-0",gpu_type="A10G"} 93.79
+gpu_carbon_g_per_hr{gpu_id="gpu-a10g-0",gpu_type="A10G"} 35.6408
+gpu_util_pct{gpu_id="gpu-a10g-1",gpu_type="A10G"} 96.94
+gpu_mfu{gpu_id="gpu-a10g-1",gpu_type="A10G"} 0.2678
+gpu_hourly_cost_usd{gpu_id="gpu-a10g-1",gpu_type="A10G"} 1.00
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-a10g-1",gpu_type="A10G"} 0.7322
+gpu_power_w{gpu_id="gpu-a10g-1",gpu_type="A10G"} 147.71
+gpu_carbon_g_per_hr{gpu_id="gpu-a10g-1",gpu_type="A10G"} 56.1292
+gpu_util_pct{gpu_id="gpu-l4-0",gpu_type="L4"} 40.00
+gpu_mfu{gpu_id="gpu-l4-0",gpu_type="L4"} 0.3021
+gpu_hourly_cost_usd{gpu_id="gpu-l4-0",gpu_type="L4"} 0.80
+gpu_wasted_cost_usd_per_hr{gpu_id="gpu-l4-0",gpu_type="L4"} 0.5583
+gpu_power_w{gpu_id="gpu-l4-0",gpu_type="L4"} 50.42
+gpu_carbon_g_per_hr{gpu_id="gpu-l4-0",gpu_type="L4"} 19.1583

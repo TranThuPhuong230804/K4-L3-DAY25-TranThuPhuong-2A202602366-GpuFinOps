@@ -13,6 +13,28 @@ Everything here runs on a **laptop with no GPU, no cloud account, and no API key
 
 ---
 
+## Completed submission
+
+**Student:** Trần Thu Phương
+
+**Student ID:** 2A202602366
+
+This submission implements all five **Your Turn** extensions and all three bonuses.
+Measured evidence is generated in `outputs/report.md`, `outputs/extension_results.json`,
+and `outputs/bonus_summary.md`.
+
+```bash
+python missions/run_all.py
+python bonus/run_all.py
+python verify.py
+pytest -q
+```
+
+The final suite contains the original 15 grading tests plus 9 extension/bonus tests
+(24 total).
+
+---
+
 ## Why this lab is a *simulation*
 
 Real GPU FinOps means real cloud billing, real spot markets, and real DCGM telemetry —

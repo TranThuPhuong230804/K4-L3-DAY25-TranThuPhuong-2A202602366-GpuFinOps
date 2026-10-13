@@ -1,0 +1,24 @@
+{
+  "requests_logged": 15,
+  "by_key": {
+    "team-chat": {
+      "requests": 10,
+      "spend_usd": 0.04605,
+      "budget_usd": 0.05,
+      "remaining_usd": 0.004,
+      "input_tokens": 2550,
+      "output_tokens": 2560
+    },
+    "team-eval": {
+      "requests": 5,
+      "spend_usd": 0.00026,
+      "budget_usd": 100.0,
+      "remaining_usd": 99.9997,
+      "input_tokens": 35,
+      "output_tokens": 1280
+    }
+  },
+  "blocked_after_requests": 10,
+  "budget_guard_triggered": true,
+  "blocked_message": "key=team-chat would spend $0.0507 > cap $0.05"
+}

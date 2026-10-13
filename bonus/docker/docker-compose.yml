@@ -8,10 +8,16 @@ services:
     environment:
       LAB_DATA_DIR: /data
       PORT: "9101"
+      GRID_CARBON_G_PER_KWH: "380"
     volumes:
       - ./exporter.py:/app/exporter.py:ro
       - ../../data:/data:ro
     ports: ["9101:9101"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:9101/healthz')"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
 
   prometheus:
     image: prom/prometheus:latest

@@ -19,3 +19,7 @@ python exporter.py                      # then: curl http://localhost:9101/metri
 
 Open the **"GPU Cost & Efficiency"** dashboard and compare *GPU-Util %* vs *MFU* — the
 util-lie GPUs jump out, and the wasted-\$/hr panel ranks them by money leaked.
+
+The exporter also publishes average board power and estimated `gCO2e/hour`. The
+dashboard contains five validated panels; `python bonus/run_all.py` exports a
+scrape snapshot to `outputs/bonus_prometheus_metrics.txt` without requiring Docker.

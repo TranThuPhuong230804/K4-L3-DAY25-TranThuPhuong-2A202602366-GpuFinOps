@@ -1,0 +1,211 @@
+{
+  "student": {
+    "name": "Trần Thu Phương",
+    "id": "2A202602366"
+  },
+  "extension_1_purchasing": {
+    "simple_savings_pct": 40.5,
+    "enhanced_savings_pct": 40.5,
+    "improvement_usd": 9.52,
+    "improvement_percentage_points": 0.058,
+    "recommendations": [
+      {
+        "job_id": "job-train-llm",
+        "gpu_type": "H100",
+        "tier": "spot",
+        "commitment": "none",
+        "interruption_rate_pct": 4.0,
+        "expected_duration_days": 14.0,
+        "on_demand": 5600,
+        "optimized": 3528
+      },
+      {
+        "job_id": "job-train-embed",
+        "gpu_type": "A100",
+        "tier": "spot",
+        "commitment": "none",
+        "interruption_rate_pct": 8.0,
+        "expected_duration_days": 5.0,
+        "on_demand": 358,
+        "optimized": 235
+      },
+      {
+        "job_id": "job-finetune",
+        "gpu_type": "H100",
+        "tier": "spot",
+        "commitment": "none",
+        "interruption_rate_pct": 4.0,
+        "expected_duration_days": 3.0,
+        "on_demand": 90,
+        "optimized": 57
+      },
+      {
+        "job_id": "job-infer-chat",
+        "gpu_type": "A10G",
+        "tier": "reserved",
+        "commitment": "3yr",
+        "interruption_rate_pct": 12.0,
+        "expected_duration_days": 1095,
+        "on_demand": 4320,
+        "optimized": 2592
+      },
+      {
+        "job_id": "job-infer-rag",
+        "gpu_type": "A100",
+        "tier": "reserved",
+        "commitment": "3yr",
+        "interruption_rate_pct": 8.0,
+        "expected_duration_days": 1095,
+        "on_demand": 3866,
+        "optimized": 2160
+      },
+      {
+        "job_id": "job-infer-search",
+        "gpu_type": "L4",
+        "tier": "reserved",
+        "commitment": "3yr",
+        "interruption_rate_pct": 10.0,
+        "expected_duration_days": 1095,
+        "on_demand": 1728,
+        "optimized": 972
+      },
+      {
+        "job_id": "job-dev-sandbox",
+        "gpu_type": "A10G",
+        "tier": "spot",
+        "commitment": "none",
+        "interruption_rate_pct": 12.0,
+        "expected_duration_days": 22.0,
+        "on_demand": 352,
+        "optimized": 153
+      },
+      {
+        "job_id": "job-batch-eval",
+        "gpu_type": "H100",
+        "tier": "spot",
+        "commitment": "none",
+        "interruption_rate_pct": 4.0,
+        "expected_duration_days": 30.0,
+        "on_demand": 225,
+        "optimized": 142
+      }
+    ]
+  },
+  "extension_2_rightsizing": {
+    "monthly_savings_usd": 288.0,
+    "recommendations": [
+      {
+        "gpu_id": "gpu-a10g-0",
+        "current_gpu": "A10G",
+        "recommended_gpu": "L4",
+        "mbu": 0.235,
+        "required_hbm_gb": 22.3,
+        "required_bw_tbs": 0.169,
+        "target_hbm_gb": 24.0,
+        "target_bw_tbs": 0.3,
+        "current_usd_per_gb": 0.0417,
+        "target_usd_per_gb": 0.0333,
+        "monthly_savings": 144.0,
+        "savings_pct": 20.0
+      },
+      {
+        "gpu_id": "gpu-a10g-1",
+        "current_gpu": "A10G",
+        "recommended_gpu": "L4",
+        "mbu": 0.302,
+        "required_hbm_gb": 22.4,
+        "required_bw_tbs": 0.217,
+        "target_hbm_gb": 24.0,
+        "target_bw_tbs": 0.3,
+        "current_usd_per_gb": 0.0417,
+        "target_usd_per_gb": 0.0333,
+        "monthly_savings": 144.0,
+        "savings_pct": 20.0
+      }
+    ]
+  },
+  "extension_3_cache": {
+    "small": {
+      "avg_reads": 10.32,
+      "break_even_reads": 1,
+      "worth_it": true,
+      "write_cost": 1.2,
+      "read_discount": 0.1,
+      "storage_cost": 0.02
+    },
+    "large": {
+      "avg_reads": 2.89,
+      "break_even_reads": 1,
+      "worth_it": true,
+      "write_cost": 1.25,
+      "read_discount": 0.1,
+      "storage_cost": 0.05
+    }
+  },
+  "extension_4_reasoning": {
+    "request_share_pct": 8.4,
+    "token_share_pct": 16.5,
+    "cost_share_pct": 16.3,
+    "energy_share_pct": 94.0,
+    "reasoning_cost_usd": 1.4,
+    "ordinary_cost_usd": 7.2,
+    "reasoning_energy_wh": 29787.74,
+    "ordinary_energy_wh": 1887.56,
+    "cap_request_share_pct": 5.0,
+    "cap_savings_usd": 0.41,
+    "cap_savings_wh": 11932.44,
+    "routing_rule": "Use reasoning only for complexity_score >= 0.80 and cap it at 5% of requests."
+  },
+  "extension_5_carbon": {
+    "jobs_considered": 5,
+    "energy_kwh": 1789.0,
+    "regions": [
+      {
+        "region": "us-east-1",
+        "usd_per_kwh": 0.12,
+        "gco2_per_kwh": 380,
+        "energy_cost_usd": 214.68,
+        "carbon_kg": 679.82,
+        "balanced_score": 0.538
+      },
+      {
+        "region": "us-west-2",
+        "usd_per_kwh": 0.07,
+        "gco2_per_kwh": 120,
+        "energy_cost_usd": 125.23,
+        "carbon_kg": 214.68,
+        "balanced_score": 0.131
+      },
+      {
+        "region": "europe-north1",
+        "usd_per_kwh": 0.09,
+        "gco2_per_kwh": 30,
+        "energy_cost_usd": 161.01,
+        "carbon_kg": 53.67,
+        "balanced_score": 0.14
+      },
+      {
+        "region": "europe-central2",
+        "usd_per_kwh": 0.18,
+        "gco2_per_kwh": 660,
+        "energy_cost_usd": 322.02,
+        "carbon_kg": 1180.74,
+        "balanced_score": 1.0
+      },
+      {
+        "region": "us-east-wa",
+        "usd_per_kwh": 0.055,
+        "gco2_per_kwh": 90,
+        "energy_cost_usd": 98.39,
+        "carbon_kg": 161.01,
+        "balanced_score": 0.048
+      }
+    ],
+    "cheapest_region": "us-east-wa",
+    "cleanest_region": "europe-north1",
+    "balanced_region": "us-east-wa",
+    "carbon_saved_kg": 626.15,
+    "carbon_saved_pct": 92.1,
+    "latency_note": "The cleanest region may be farther from users; move checkpointable batch/training jobs, but keep latency-sensitive inference near demand."
+  }
+}

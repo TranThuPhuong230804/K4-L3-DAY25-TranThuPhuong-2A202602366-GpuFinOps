@@ -5,6 +5,21 @@ live prices as fast-moving (re-baseline before each cohort).
 """
 from __future__ import annotations
 
+import math
+
+
+# Illustrative hourly pre-emption probabilities. Keep the assumption beside
+# the purchasing policy so it is visible and easy to re-baseline.
+GPU_INTERRUPTION_RATES = {
+    "H100": 0.04,
+    "H200": 0.06,
+    "A100": 0.08,
+    "A10G": 0.12,
+    "L4": 0.10,
+    "B200": 0.07,
+    "MI300X": 0.09,
+}
+
 
 def request_cost(
     input_tok: int,
@@ -60,21 +75,108 @@ def break_even_utilization(discount_frac: float) -> float:
     return max(0.0, min(1.0, 1.0 - discount_frac))
 
 
-def recommend_tier(hours_per_day: float, interruptible: bool, reserved_discount: float = 0.45) -> str:
-    """Pick a purchasing tier from a workload's duty cycle + interruptibility.
+def recommend_tier(
+    hours_per_day: float,
+    interruptible: bool,
+    reserved_discount: float = 0.45,
+    *,
+    gpu_type: str | None = None,
+    on_demand_hr: float | None = None,
+    spot_hr: float | None = None,
+    interruption_rate: float | None = None,
+    checkpoint_overhead_frac: float = 0.03,
+    rework_hours_per_interrupt: float = 0.5,
+) -> str:
+    """Pick a purchasing tier using duty cycle and risk-adjusted spot cost.
 
-    DOCUMENTED simple policy (instructor extension point — swap in your own):
-      - interruptible & not 24/7  -> 'spot'      (checkpoint and ride the discount)
-      - duty cycle >= break-even  -> 'reserved'  (steady, high utilization)
-      - otherwise                 -> 'on_demand' (spiky / low duty)
+    With catalog inputs, the policy includes the GPU-specific interruption and
+    checkpoint/rework cost before selecting spot. The three-argument form stays
+    backward-compatible with the lab's original documented policy.
     """
     duty = max(0.0, hours_per_day) / 24.0
     be = break_even_utilization(reserved_discount)
     if interruptible and hours_per_day < 24:
+        rate = interruption_rate
+        if rate is None:
+            rate = GPU_INTERRUPTION_RATES.get(gpu_type or "", 0.05)
+        if on_demand_hr is not None and spot_hr is not None:
+            effective_spot = spot_hr * (
+                1.0 + checkpoint_overhead_frac
+                + max(0.0, rate) * rework_hours_per_interrupt
+            )
+            if effective_spot >= on_demand_hr:
+                return "on_demand"
         return "spot"
     if duty >= be:
         return "reserved"
     return "on_demand"
+
+
+def select_reserved_term(
+    expected_duration_days: float,
+    on_demand_hr: float,
+    reserved_1yr_hr: float,
+    reserved_3yr_hr: float,
+) -> dict:
+    """Choose the cheapest commitment including each term's minimum duration.
+
+    A commitment is paid for its full one- or three-year term even when the
+    workload ends sooner. This avoids comparing hourly discounts while ignoring
+    stranded commitment months.
+    """
+    duration = max(0.0, expected_duration_days)
+    candidates = {
+        "on_demand": duration * 24.0 * max(0.0, on_demand_hr),
+        "1yr": max(duration, 365.0) * 24.0 * max(0.0, reserved_1yr_hr),
+        "3yr": max(duration, 1095.0) * 24.0 * max(0.0, reserved_3yr_hr),
+    }
+    term = min(candidates, key=candidates.get)
+    rates = {
+        "on_demand": on_demand_hr,
+        "1yr": reserved_1yr_hr,
+        "3yr": reserved_3yr_hr,
+    }
+    return {
+        "term": term,
+        "hourly_rate": round(max(0.0, rates[term]), 4),
+        "planning_cost": round(candidates[term], 2),
+        "candidate_costs": {k: round(v, 2) for k, v in candidates.items()},
+    }
+
+
+def cache_break_even_reads(
+    write_cost: float = 1.25,
+    read_discount: float = 0.10,
+    storage_cost: float = 0.0,
+) -> int | float:
+    """Minimum repeated reads after one write needed for caching to pay.
+
+    Costs are normalized to an ordinary input-token read. Without caching, one
+    write plus *r* repeats costs ``1 + r``. With caching it costs
+    ``write_cost + storage_cost + r * read_discount``.
+    """
+    write_cost = max(0.0, write_cost)
+    storage_cost = max(0.0, storage_cost)
+    if read_discount >= 1.0:
+        return 0 if write_cost + storage_cost < 1.0 else math.inf
+    read_discount = max(0.0, read_discount)
+    raw = (write_cost + storage_cost - 1.0) / (1.0 - read_discount)
+    # Profit requires a strict inequality, so exact break-even needs one more read.
+    return max(0, math.floor(raw) + 1)
+
+
+def cache_is_worth_it(
+    avg_reads: float,
+    write_cost: float = 1.25,
+    read_discount: float = 0.10,
+    storage_cost: float = 0.0,
+) -> bool:
+    """Return whether observed repeat reads clear the cache break-even point."""
+    return max(0.0, avg_reads) >= cache_break_even_reads(
+        write_cost=write_cost,
+        read_discount=read_discount,
+        storage_cost=storage_cost,
+    )
 
 
 def spot_checkpoint_cost(

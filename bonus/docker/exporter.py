@@ -9,6 +9,7 @@ from http.server import BaseHTTPRequestHandler, HTTPServer
 
 DATA_DIR = os.environ.get("LAB_DATA_DIR",
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data"))
+GRID_CARBON_G_PER_KWH = float(os.environ.get("GRID_CARBON_G_PER_KWH", "380"))
 
 
 def _load():
@@ -39,6 +40,10 @@ def render() -> str:
         "# TYPE gpu_hourly_cost_usd gauge",
         "# HELP gpu_wasted_cost_usd_per_hr $/hr paid for FLOPs not used (1-mfu)*cost",
         "# TYPE gpu_wasted_cost_usd_per_hr gauge",
+        "# HELP gpu_power_w Average GPU board power",
+        "# TYPE gpu_power_w gauge",
+        "# HELP gpu_carbon_g_per_hr Estimated operational carbon at configured grid intensity",
+        "# TYPE gpu_carbon_g_per_hr gauge",
     ]
     for gid, a in agg.items():
         gtype = a["type"]
@@ -46,16 +51,25 @@ def render() -> str:
         mfu = sum(a["mfu"]) / len(a["mfu"])
         cost = float(cat[gtype]["on_demand_hr"])
         wasted = (1.0 - mfu) * cost
+        power = sum(a["power"]) / len(a["power"])
+        carbon = power / 1000.0 * GRID_CARBON_G_PER_KWH
         lbl = f'{{gpu_id="{gid}",gpu_type="{gtype}"}}'
         out.append(f"gpu_util_pct{lbl} {util:.2f}")
         out.append(f"gpu_mfu{lbl} {mfu:.4f}")
         out.append(f"gpu_hourly_cost_usd{lbl} {cost:.2f}")
         out.append(f"gpu_wasted_cost_usd_per_hr{lbl} {wasted:.4f}")
+        out.append(f"gpu_power_w{lbl} {power:.2f}")
+        out.append(f"gpu_carbon_g_per_hr{lbl} {carbon:.4f}")
     return "\n".join(out) + "\n"
 
 
 class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
+        if self.path == "/healthz":
+            self.send_response(200)
+            self.end_headers()
+            self.wfile.write(b"ok\n")
+            return
         if self.path != "/metrics":
             self.send_response(404); self.end_headers(); return
         body = render().encode()
